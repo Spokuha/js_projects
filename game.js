@@ -50,21 +50,27 @@ const player = createEntity({ name: 'player' })
 console.log('IDS', IDS)
 
 const gameWorld = {
-  baseLevelRange: [5, 5],
+  baseLevelRange: {
+    column: 5,
+    row: 5,
+  },
   generateLevel: function () {
     createEl({
       appendTo: 'body',
-      className: 'level'
+      className: 'level',
       style: {
         display: 'grid',
-        gridTemplateRow: `${this.baseLevelRange[0]}fr`
+        width: '100vw',
+        height: '100vh',
+        'grid-template-rows': `repeat(${this.baseLevelRange.row}, 1fr`,
+        'grid-template-columns': `repeat(${this.baseLevelRange.column}, 1fr`
       }
     })
 
-    range({ from: this.baseLevelRange[0] }).forEach(x => {
-      range({ from: this.baseLevelRange[1] }).forEach(y => {
+    range({ from: this.baseLevelRange.column }).forEach(() => {
+      range({ from: this.baseLevelRange.row }).forEach(() => {
         createEl({
-          appendTo: '.game'
+          appendTo: '.level'
         })
       })
     })

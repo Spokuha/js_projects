@@ -1,22 +1,26 @@
 const createEl = ({
   elName = 'div',
-  className,
-  value,
-  type,
-  innerHTML,
+  className = '',
+  value = null,
+  type = '',
+  innerHTML = '',
   appendTo = '',
-  onclick,
-  onchange,
-  style,
+  onclick = null,
+  onchange = null,
+  style = {},
   datasets = [],
-  appendInnerHTML
+  appendInnerHTML = ''
 }) => {
   const el = document.createElement(elName)
 
   if (className) el.className = className
   if (type) el.type = type
   if (value) el.value = value
-  if (style) el.style = style
+  if (style) {
+    Object.keys(style).forEach(field => {
+      el.style[field] = style[field]
+    })
+  }
   if (innerHTML) el.innerHTML = innerHTML
   if (onclick) el.onclick = onclick
   if (onchange) el.onchange = onchange
