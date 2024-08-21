@@ -9,7 +9,7 @@ const createEl = ({
   onchange = null,
   style = {},
   datasets = [],
-  appendInnerHTML = ''
+  appendInnerHTML = '',
 }) => {
   const el = document.createElement(elName)
 

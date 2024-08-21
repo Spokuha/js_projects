@@ -52,7 +52,7 @@ console.log('IDS', IDS)
 const gameWorld = {
   baseLevelRange: {
     column: 5,
-    row: 5,
+    row: 5
   },
   generateLevel: function () {
     createEl({
@@ -61,7 +61,7 @@ const gameWorld = {
       style: {
         display: 'grid',
         width: '100vw',
-        height: '100vh',
+        height: '50vh',
         'grid-template-rows': `repeat(${this.baseLevelRange.row}, 1fr`,
         'grid-template-columns': `repeat(${this.baseLevelRange.column}, 1fr`
       }
@@ -70,7 +70,11 @@ const gameWorld = {
     range({ from: this.baseLevelRange.column }).forEach(() => {
       range({ from: this.baseLevelRange.row }).forEach(() => {
         createEl({
-          appendTo: '.level'
+          appendTo: '.level',
+          className: 'row',
+          style: {
+            cursor: 'pointer'
+          }
         })
       })
     })
@@ -88,3 +92,21 @@ const gameWorld = {
 }
 
 gameWorld.generateLevel()
+
+const menu = createEl({
+  appendTo: 'body',
+  className: 'menu'
+})
+
+const menuButtons = [
+  {
+    name: 'Начать'
+  }
+]
+
+menuButtons.forEach(({ name }) => {
+  createEl({
+    appendTo: `.${menu.className}`,
+    innerHTML: name
+  })
+})
