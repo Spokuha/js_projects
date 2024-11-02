@@ -2,6 +2,9 @@ const createEl = ({
   elName = 'div',
   className = '',
   value = null,
+  store,
+  setValue,
+  setStore,
   type = '',
   innerHTML = '',
   appendTo = '',
@@ -11,6 +14,8 @@ const createEl = ({
   datasets = [],
   appendInnerHTML = '',
 }) => {
+  // const existing = document.querySelector(’${elName}[text="${innerHTML}"]’)
+
   const el = document.createElement(elName)
 
   if (className) el.className = className
@@ -33,11 +38,33 @@ const createEl = ({
 
   if (appendTo) {
     const body = document.body
+
     if (appendTo === 'body') {
       body.append(el)
     } else {
       body.querySelector(appendTo).append(el)
     }
+  }
+  
+  if (store !== undefined) {
+      let validator = {
+        set: function (obj, prop, value) {
+            if (setStore) setStore(value);
+
+            else if(setValue) el.innerHTML = setValue(value);
+            else el.innerHTML = value;
+            
+            // Стандартное сохранение значения
+            obj[prop] = value;
+
+            // Обозначить успех
+            return true;
+        },
+      };
+      
+      const newStore = new Proxy(store, validator);
+
+      return { store: newStore, el }
   }
 
   return el
